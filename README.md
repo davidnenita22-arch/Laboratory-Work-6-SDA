@@ -165,7 +165,7 @@ Main menu options:
 8. Delete element at position
 9. Register (save) stack to file
 10. Load stack from binary file
-11. Write Lab-10 input.txt
+11. Input input.txt
 0. Exit
 ```
 
