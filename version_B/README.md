@@ -220,7 +220,7 @@ Specialized text analysis tool:
 
 ## Author
 
-David Nenita
+David Nenita FAF-252
 
 ## Course
 
