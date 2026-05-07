@@ -224,8 +224,7 @@ David Nenita
 
 ## Course
 
-C/C++ Programming – Lab 6 (Average Level)  
-DSA – FAF – 2022-23
+Data Structure and Algorithms 
 
 ---
 
