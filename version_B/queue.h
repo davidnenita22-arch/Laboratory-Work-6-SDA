@@ -1,21 +1,9 @@
-/*=============================================================================
- *  FILE:    queue.h
- *  PURPOSE: All four Queue variants based on a doubly-linked List ADS:
- *             1. Simple Queue          (FIFO)
- *             2. Double-Ended Queue    (Deque – insert/delete both ends)
- *             3. Circular Queue        (fixed-capacity ring using linked nodes)
- *             4. Priority Queue        (min-heap property via interrog_count)
- *
- *  Every variant uses the same QNode / Queue struct; the queue_type field
- *  selects which invariant to enforce at runtime.
- *============================================================================*/
-
 #ifndef QUEUE_H
 #define QUEUE_H
 
 #include "cdt.h"
 
-/* ── Queue type tag ──────────────────────────────────────────────────────── */
+/* Queue type tag */
 typedef enum {
     QUEUE_SIMPLE    = 1,
     QUEUE_DEQUE     = 2,
@@ -23,25 +11,22 @@ typedef enum {
     QUEUE_PRIORITY  = 4
 } QueueType;
 
-/* ── Doubly-linked node ──────────────────────────────────────────────────── */
+/* Doubly-linked node  */
 typedef struct QNode {
     TextRecord  *data;
     struct QNode *prev;
     struct QNode *next;
 } QNode;
 
-/* ── Queue handle ────────────────────────────────────────────────────────── */
+/* Queue handle */
 typedef struct {
-    QNode     *front;      /* for Simple/Circular/Priority: dequeue end      */
-    QNode     *rear;       /* enqueue end                                     */
+    QNode     *front;      /* for Simple/Circular/Priority: dequeue end */
+    QNode     *rear;       /* enqueue end */
     int        size;
-    int        capacity;   /* >0 only for QUEUE_CIRCULAR; 0 = unlimited      */
+    int        capacity;   /* >0 only for QUEUE_CIRCULAR; 0 = unlimited */
     QueueType  type;
 } Queue;
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  INTERNAL helpers
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline QNode *_qnode_new(const TextRecord *rec)
 {
     TextRecord *copy = (TextRecord *)malloc(sizeof(TextRecord));
@@ -109,16 +94,13 @@ static inline QNode *_unlink_rear(Queue *q)
     return n;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  CREATE / DESTROY
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline Queue *queue_create(QueueType type, int capacity)
 {
     Queue *q = (Queue *)malloc(sizeof(Queue));
     if (!q) { perror("queue_create: malloc"); return NULL; }
-    q->front    = q->rear = NULL;
-    q->size     = 0;
-    q->type     = type;
+    q->front = q->rear = NULL;
+    q->size = 0;
+    q->type = type;
     q->capacity = (type == QUEUE_CIRCULAR && capacity > 0) ? capacity : 0;
     return q;
 }
@@ -135,14 +117,6 @@ static inline void queue_destroy(Queue *q)
     free(q);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  ENQUEUE  – inserts element respecting the queue's type invariant
- *
- *   Simple    → insert at rear
- *   Deque     → insert at rear  (default; caller may use enqueue_front)
- *   Circular  → insert at rear, reject if full
- *   Priority  → insert at sorted position (ascending interrog_count = min)
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline int queue_enqueue(Queue *q, const TextRecord *rec)
 {
     if (!q || !rec) return 0;
@@ -157,10 +131,10 @@ static inline int queue_enqueue(Queue *q, const TextRecord *rec)
     if (!n) return 0;
 
     if (q->type == QUEUE_PRIORITY) {
-        /* Insert before the first node whose priority (interrog_count) > rec */
+        /* Insert before the first node whose priority (interrog_count) < rec */
         int pri = rec->interrog_count;
         QNode *cur = q->front;
-        while (cur && cur->data->interrog_count <= pri) cur = cur->next;
+        while (cur && cur->data->interrog_count >= pri) cur = cur->next;
 
         if (!cur) {
             /* insert at rear */
@@ -170,10 +144,10 @@ static inline int queue_enqueue(Queue *q, const TextRecord *rec)
             _link_front(q, n);
         } else {
             /* insert before cur */
-            QNode *p  = cur->prev;
-            n->prev   = p;
-            n->next   = cur;
-            p->next   = n;
+            QNode *p = cur->prev;
+            n->prev = p;
+            n->next = cur;
+            p->next = n;
             cur->prev = n;
             q->size++;
         }
@@ -196,11 +170,6 @@ static inline int queue_enqueue_front(Queue *q, const TextRecord *rec)
     return 1;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  DEQUEUE
- *   Simple / Circular / Priority → remove from front
- *   Deque  → also expose dequeue_rear
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline TextRecord *queue_dequeue(Queue *q)
 {
     if (!q || !q->front) { printf("  [Queue is empty]\n"); return NULL; }
@@ -224,9 +193,6 @@ static inline TextRecord *queue_dequeue_rear(Queue *q)
     return r;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  PEEK (front / rear)
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline TextRecord *queue_peek_front(const Queue *q)
 {
     return (q && q->front) ? q->front->data : NULL;
@@ -236,9 +202,6 @@ static inline TextRecord *queue_peek_rear(const Queue *q)
     return (q && q->rear) ? q->rear->data : NULL;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  SEARCH
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline TextRecord *queue_search_by_pos(const Queue *q, int pos)
 {
     if (!q || pos < 1 || pos > q->size) return NULL;
@@ -258,9 +221,6 @@ static inline TextRecord *queue_search_by_value(const Queue *q, const char *txt)
     return NULL;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  DELETE element at 1-based position
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline int queue_delete_at(Queue *q, int pos)
 {
     if (!q || pos < 1 || pos > q->size) {
@@ -272,17 +232,14 @@ static inline int queue_delete_at(Queue *q, int pos)
 
     /* Unlink */
     if (cur->prev) cur->prev->next = cur->next;
-    else           q->front        = cur->next;
+    else  q->front = cur->next;
     if (cur->next) cur->next->prev = cur->prev;
-    else           q->rear         = cur->prev;
+    else  q->rear = cur->prev;
     q->size--;
     _qnode_free(cur);
     return 1;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  DISPLAY
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline const char *queue_type_name(QueueType t)
 {
     switch (t) {
@@ -319,9 +276,6 @@ static inline void queue_display(const Queue *q)
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  REGISTER (save) – text or binary
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline int queue_register(const Queue *q, const char *path, int binary)
 {
     if (!q || !path) return 0;
@@ -357,7 +311,7 @@ static inline int queue_register(const Queue *q, const char *path, int binary)
     return 1;
 }
 
-/* ── Load from binary ──────────────────────────────────────────────────── */
+/* Load from binary */
 static inline int queue_load_binary(Queue *q, const char *path)
 {
     if (!q || !path) return 0;
@@ -365,9 +319,9 @@ static inline int queue_load_binary(Queue *q, const char *path)
     if (!fp) { perror("queue_load_binary"); return 0; }
 
     int t, count, cap;
-    fread(&t,     sizeof(int), 1, fp);
+    fread(&t, sizeof(int), 1, fp);
     fread(&count, sizeof(int), 1, fp);
-    fread(&cap,   sizeof(int), 1, fp);
+    fread(&cap, sizeof(int), 1, fp);
 
     for (int i = 0; i < count; i++) {
         TextRecord rec;
@@ -379,4 +333,4 @@ static inline int queue_load_binary(Queue *q, const char *path)
     return 1;
 }
 
-#endif /* QUEUE_H */
+#endif

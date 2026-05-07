@@ -1,9 +1,3 @@
-/*=============================================================================
- *  FILE:    file_utils.h
- *  PURPOSE: Helper functions to create / open / reopen / delete *.txt and
- *           *.bin working files.  The full path is always read from keyboard.
- *============================================================================*/
-
 #ifndef FILE_UTILS_H
 #define FILE_UTILS_H
 
@@ -65,4 +59,4 @@ static inline int file_delete(const char *path)
     return 0;
 }
 
-#endif /* FILE_UTILS_H */
+#endif

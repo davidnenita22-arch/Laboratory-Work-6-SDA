@@ -1,0 +1,26 @@
+=== Simple Queue  REGISTER (size=4) ===
+
+[1]
+TEXT    : Is it A? Is it B? Correct!
+INTERROG: 2
+2ND_LEN : 8
+SOURCE  : keyboard
+---
+[2]
+TEXT    : Hello. Who are you? Good day.
+INTERROG: 1
+2ND_LEN : 0
+SOURCE  : keyboard
+---
+[3]
+TEXT    : Yes? No? Maybe? Why?
+INTERROG: 4
+2ND_LEN : 3
+SOURCE  : keyboard
+---
+[4]
+TEXT    : Stop! Go? Wait. Again?
+INTERROG: 2
+2ND_LEN : 6
+SOURCE  : keyboard
+---

@@ -1,21 +1,7 @@
-/*=============================================================================
- *  FILE:    main.c   (Version B – All Queue types)
- *  COURSE:  C / C++ Programming  –  Lab 6 (Average level)
- *  PURPOSE: Entry point for the Queue solution.
- *           Integrates Lab-10 (input.txt / output.txt) via menu option 5.
- *
- *  COMPILE:
- *      gcc -Wall -Wextra -o lab6_B main.c
- *============================================================================*/
-
 #include "menu.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-/*===========================================================================
- *  LAB-10  helper functions (same logic as Version A)
- *===========================================================================*/
 
 static int count_interrogative(const char *str)
 {
@@ -41,9 +27,8 @@ static int kth_interrogative_length(const char *str, int k)
     return 0;
 }
 
-void lab10_write_input(void)
+void lab6_write_input(void)
 {
-    printf("\n  ── Lab-10 helper ──────────────────────────────────\n");
     FILE *fin = fopen("input.txt", "w");
     if (!fin) { perror("  Cannot create input.txt"); return; }
     printf("  Enter your text string for input.txt:\n  > ");
@@ -56,10 +41,10 @@ void lab10_write_input(void)
     size_t len = strlen(buf);
     if (len > 0 && buf[len-1] == '\n') buf[len-1] = '\0';
 
-    int total      = count_interrogative(buf);
+    int total = count_interrogative(buf);
     int second_len = kth_interrogative_length(buf, 2);
 
-    printf("\n  ── Analysis results ───────────────────────────────\n");
+    printf("\n  Analysis results \n");
     printf("  Number of interrogative sentences : %d\n", total);
     if (second_len > 0)
         printf("  Length of 2nd interrogative sent. : %d characters\n", second_len);
@@ -72,12 +57,9 @@ void lab10_write_input(void)
     fprintf(fout, "Length of 2nd interrogative   : %d\n", second_len);
     fclose(fout);
     printf("  [output.txt written]\n");
-    printf("  ────────────────────────────────────────────────────\n");
+    printf("\n");
 }
 
-/*===========================================================================
- *  MAIN
- *===========================================================================*/
 int main(void)
 {
     run_menu();

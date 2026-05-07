@@ -1,0 +1,20 @@
+=== Circular Queue  REGISTER (size=3) ===
+
+[1]
+TEXT    : Are you there? Is anyone home?
+INTERROG: 2
+2ND_LEN : 15
+SOURCE  : keyboard
+---
+[2]
+TEXT    : Delete this? Are you sure? Yes.
+INTERROG: 2
+2ND_LEN : 13
+SOURCE  : keyboard
+---
+[3]
+TEXT    : Danger! System failure? Reboot.
+INTERROG: 1
+2ND_LEN : 0
+SOURCE  : keyboard
+---

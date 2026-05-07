@@ -1,0 +1,26 @@
+=== Priority Queue  REGISTER (size=4) ===
+
+[1]
+TEXT    : Who? What? Where? When? Why?
+INTERROG: 5
+2ND_LEN : 5
+SOURCE  : keyboard
+---
+[2]
+TEXT    : Is it working? Are you sure? Yes.
+INTERROG: 2
+2ND_LEN : 13
+SOURCE  : keyboard
+---
+[3]
+TEXT    : Can we finish today? Hopefully.
+INTERROG: 1
+2ND_LEN : 0
+SOURCE  : keyboard
+---
+[4]
+TEXT    : The code is running. No questions here.
+INTERROG: 0
+2ND_LEN : 0
+SOURCE  : keyboard
+---

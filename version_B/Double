@@ -1,0 +1,20 @@
+=== Double-Ended Queue  REGISTER (size=3) ===
+
+[1]
+TEXT    : End of circle? Back to front?
+INTERROG: 2
+2ND_LEN : 14
+SOURCE  : keyboard
+---
+[2]
+TEXT    : Ready? Are you sure? Start.
+INTERROG: 2
+2ND_LEN : 13
+SOURCE  : keyboard
+---
+[3]
+TEXT    : Is the ring open? It is now.
+INTERROG: 1
+2ND_LEN : 0
+SOURCE  : keyboard
+---

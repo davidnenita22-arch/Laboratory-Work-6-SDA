@@ -1,17 +1,12 @@
-/*=============================================================================
- *  FILE:    menu.h   (Version B – Queue)
- *  PURPOSE: Interactive menu with sub-menus for all 4 queue types.
- *============================================================================*/
-
 #ifndef MENU_H
 #define MENU_H
 
 #include "queue.h"
 #include "file_utils.h"
 
-void lab10_write_input(void);  /* defined in main.c */
+void lab6_write_input(void);  /* defined in main.c */
 
-/* ── utility ─────────────────────────────────────────────────────────────── */
+/* utility */
 static inline void clear_input_buffer(void)
 { int c; while ((c = getchar()) != '\n' && c != EOF); }
 
@@ -24,13 +19,13 @@ static inline int read_int(const char *prompt)
     return val;
 }
 
-/* ── banners ─────────────────────────────────────────────────────────────── */
+/* banners */
 static inline void print_banner(void)
 {
     printf("\n");
-    printf("  ╔═══════════════════════════════════════════════════════════╗\n");
-    printf("  ║  LAB 6 – Version B : Dynamic QUEUE variants (List ADS)  ║\n");
-    printf("  ╚═══════════════════════════════════════════════════════════╝\n");
+    printf("\n");
+    printf("    Version B : Dynamic QUEUE  \n");
+    printf("\n");
 }
 
 static inline void print_type_menu(void)
@@ -44,14 +39,11 @@ static inline void print_type_menu(void)
     printf("  Choice: ");
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  OPERATION SUB-MENU  (shared for all types, extra options for Deque)
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline void run_queue_menu(Queue *q)
 {
     int choice;
     while (1) {
-        printf("\n  ── %s  (size=%d) ────────────────────────────────────\n",
+        printf("\n  %s  (size=%d)\n",
                queue_type_name(q->type), q->size);
         printf("   1. Enqueue (at rear)\n");
         if (q->type == QUEUE_DEQUE)
@@ -167,10 +159,6 @@ static inline void run_queue_menu(Queue *q)
         }
     }
 }
-
-/* ═══════════════════════════════════════════════════════════════════════════
- *  MAIN MENU
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline void run_menu(void)
 {
     /* Keep one active queue of each type */
@@ -179,15 +167,15 @@ static inline void run_menu(void)
     print_banner();
 
     while (1) {
-        printf("\n  ┌──────────────────────────────────────────────────────┐\n");
-        printf("  │  MAIN MENU                                           │\n");
-        printf("  │  1. Work with Simple Queue                           │\n");
-        printf("  │  2. Work with Double-Ended Queue (Deque)             │\n");
-        printf("  │  3. Work with Circular Queue                         │\n");
-        printf("  │  4. Work with Priority Queue                         │\n");
-        printf("  │  5. Lab-10 helper (input.txt / output.txt)           │\n");
-        printf("  │  0. Exit                                             │\n");
-        printf("  └──────────────────────────────────────────────────────┘\n");
+        printf("\n \n");
+        printf("  │  MAIN MENU\n");
+        printf("  │  1. Work with Simple Queue \n");
+        printf("  │  2. Work with Double-Ended Queue (Deque)\n");
+        printf("  │  3. Work with Circular Queue\n");
+        printf("  │  4. Work with Priority Queue\n");
+        printf("  │  5. Lab-6 helper (input.txt / output.txt)\n");
+        printf("  │  0. Exit  \n");
+        printf(" \n");
         printf("  Choice: ");
 
         if (scanf("%d", &choice) != 1) { clear_input_buffer(); continue; }
@@ -200,7 +188,7 @@ static inline void run_menu(void)
             return;
         }
 
-        if (choice == 5) { lab10_write_input(); continue; }
+        if (choice == 5) { lab6_write_input(); continue; }
 
         if (choice < 1 || choice > 4) { printf("  [Invalid]\n"); continue; }
 
@@ -210,7 +198,7 @@ static inline void run_menu(void)
         if (!queues[type]) {
             int cap = 0;
             if (type == QUEUE_CIRCULAR) {
-                cap = read_int("  Circular queue capacity (e.g. 5): ");
+                cap = read_int("  Circular queue capacity: ");
                 if (cap <= 0) cap = 5;
             }
             queues[type] = queue_create(type, cap);
@@ -223,4 +211,4 @@ static inline void run_menu(void)
     }
 }
 
-#endif /* MENU_H */
+#endif 
