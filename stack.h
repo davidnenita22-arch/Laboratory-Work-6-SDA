@@ -1,38 +1,26 @@
-/*=============================================================================
- *  FILE:    stack.h
- *  PURPOSE: Dynamic Stack based on a singly-linked List ADS.
- *           Elements are TextRecord nodes allocated on the heap (pointers).
- *           Provides: create, push, pop, peek, search (pos / value),
- *                     delete element, display, register (save) to file.
- *============================================================================*/
-
 #ifndef STACK_H
 #define STACK_H
 
 #include "cdt.h"
 
-/* ── Node ────────────────────────────────────────────────────────────────── */
 typedef struct StackNode {
-    TextRecord      *data;        /* pointer to heap-allocated record        */
+    TextRecord *data;        /* pointer to heap-allocated record */
     struct StackNode *next;
 } StackNode;
 
-/* ── Stack handle ────────────────────────────────────────────────────────── */
+
 typedef struct {
     StackNode *top;
-    int        size;
+    int size;
 } Stack;
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  CREATION / DESTRUCTION
- * ═══════════════════════════════════════════════════════════════════════════*/
 
 /* Allocate and initialise an empty stack */
 static inline Stack *stack_create(void)
 {
     Stack *s = (Stack *)malloc(sizeof(Stack));
     if (!s) { perror("stack_create: malloc"); return NULL; }
-    s->top  = NULL;
+    s->top = NULL;
     s->size = 0;
     return s;
 }
@@ -51,10 +39,6 @@ static inline void stack_destroy(Stack *s)
     free(s);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  PUSH / POP / PEEK
- * ═══════════════════════════════════════════════════════════════════════════*/
-
 /* Push a *copy* of rec onto the stack */
 static inline int stack_push(Stack *s, const TextRecord *rec)
 {
@@ -68,7 +52,7 @@ static inline int stack_push(Stack *s, const TextRecord *rec)
     if (!node) { perror("stack_push: malloc StackNode"); free(copy); return 0; }
     node->data = copy;
     node->next = s->top;
-    s->top     = node;
+    s->top = node;
     s->size++;
     return 1;
 }
@@ -92,10 +76,6 @@ static inline TextRecord *stack_peek(const Stack *s)
     return s->top->data;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  SEARCH
- * ═══════════════════════════════════════════════════════════════════════════*/
-
 /* Search by 1-based position from top; returns pointer or NULL */
 static inline TextRecord *stack_search_by_pos(const Stack *s, int pos)
 {
@@ -117,13 +97,10 @@ static inline TextRecord *stack_search_by_value(const Stack *s, const char *txt)
     return NULL;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  DELETE an element by 1-based position from top
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline int stack_delete_at(Stack *s, int pos)
 {
     if (!s || pos < 1 || pos > s->size) {
-        printf("  [Invalid position]\n");
+        printf("[Invalid position]\n");
         return 0;
     }
     /* Special case: deleting top */
@@ -143,23 +120,20 @@ static inline int stack_delete_at(Stack *s, int pos)
     return 1;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  DISPLAY
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline void stack_display(const Stack *s)
 {
     if (!s || !s->top) { printf("  [Stack is empty]\n"); return; }
-    printf("  Stack (top → bottom), %d element(s):\n", s->size);
-    printf("  %-4s  %-45s  %5s  %5s\n",
+    printf("Stack (top → bottom), %d element(s):\n", s->size);
+    printf("%-4s  %-45s  %5s  %5s\n",
            "#", "Text (first 45 chars)", "IQ", "2ndL");
-    printf("  %s\n", "----------------------------------------------------------------------");
+    printf("%s\n", "----------------------------------------------------------------------");
     StackNode *cur = s->top;
     int pos = 1;
     while (cur) {
         char preview[46];
         strncpy(preview, cur->data->text, 45);
         preview[45] = '\0';
-        printf("  %-4d  %-45s  %5d  %5d\n",
+        printf("%-4d  %-45s  %5d  %5d\n",
                pos++, preview,
                cur->data->interrog_count,
                cur->data->second_len);
@@ -167,15 +141,12 @@ static inline void stack_display(const Stack *s)
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  REGISTER  – save stack state to a file (text or binary)
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline int stack_register(const Stack *s, const char *path, int binary)
 {
     if (!s || !path) return 0;
 
     if (binary) {
-        /* ── binary mode ─────────────────────────────────────────────── */
+        /* binary mode*/
         FILE *fp = fopen(path, "wb");
         if (!fp) { perror("stack_register (binary): fopen"); return 0; }
         fwrite(&s->size, sizeof(int), 1, fp);
@@ -186,7 +157,7 @@ static inline int stack_register(const Stack *s, const char *path, int binary)
         }
         fclose(fp);
     } else {
-        /* ── text mode ───────────────────────────────────────────────── */
+        /* text mode*/
         FILE *fp = fopen(path, "w");
         if (!fp) { perror("stack_register (text): fopen"); return 0; }
         fprintf(fp, "=== STACK REGISTER  (size=%d) ===\n\n", s->size);
@@ -199,13 +170,10 @@ static inline int stack_register(const Stack *s, const char *path, int binary)
         }
         fclose(fp);
     }
-    printf("  [Saved to: %s  (%s mode)]\n", path, binary ? "binary" : "text");
+    printf("Saved to: %s  (%s mode)]\n", path, binary ? "binary" : "text");
     return 1;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  LOAD from binary file
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline int stack_load_binary(Stack *s, const char *path)
 {
     if (!s || !path) return 0;
@@ -229,4 +197,4 @@ static inline int stack_load_binary(Stack *s, const char *path)
     return 1;
 }
 
-#endif /* STACK_H */
+#endif

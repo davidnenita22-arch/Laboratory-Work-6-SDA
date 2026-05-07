@@ -63,7 +63,7 @@ void lab10_write_input(void)
     int  second_len = kth_interrogative_length(buf, 2);
 
     /* Screen output */
-    printf("\n  ── Analysis results ───────────────────────────────\n");
+    printf("\n  ─ Analysis results ─\n");
     printf("  Number of interrogative sentences : %d\n", total);
     if (second_len > 0)
         printf("  Length of 2nd interrogative sent. : %d characters\n", second_len);
@@ -79,10 +79,6 @@ void lab10_write_input(void)
     printf("  [output.txt written]\n");
     printf("  ────────────────────────────────────────────────────\n");
 }
-
-/*===========================================================================
- *  MAIN
- *===========================================================================*/
 int main(void)
 {
     run_menu();

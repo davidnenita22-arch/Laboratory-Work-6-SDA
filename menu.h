@@ -1,18 +1,12 @@
-/*=============================================================================
- *  FILE:    menu.h
- *  PURPOSE: Interactive menu for Version A – Stack ADS
- *============================================================================*/
-
 #ifndef MENU_H
 #define MENU_H
 
 #include "stack.h"
 #include "file_utils.h"
 
-/* ── forward declaration of the input.txt writer (defined in main.c) ─────── */
+/* forward declaration of the input.txt writer (defined in main.c) */
 void lab10_write_input(void);
 
-/* ─────────────────────────────────────────────────────────────────────────── */
 static inline void clear_input_buffer(void)
 {
     int c;
@@ -31,9 +25,9 @@ static inline int read_int(const char *prompt)
 static inline void print_banner(void)
 {
     printf("\n");
-    printf("  ╔══════════════════════════════════════════════════╗\n");
-    printf("  ║   LAB 6 – Version A : Dynamic STACK (List ADS)  ║\n");
-    printf("  ╚══════════════════════════════════════════════════╝\n");
+    printf(" \n");
+    printf("      Version A : Dynamic STACK (List ADS)  \n");
+    printf(" \n");
 }
 
 static inline void print_menu(void)
@@ -56,9 +50,6 @@ static inline void print_menu(void)
     printf("  Choice: ");
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  RUN MENU  – returns only when user chooses 0
- * ═══════════════════════════════════════════════════════════════════════════*/
 static inline void run_menu(void)
 {
     Stack *stack = NULL;
@@ -74,14 +65,14 @@ static inline void run_menu(void)
 
         switch (choice) {
 
-        /* ── 1. Create / Reset ─────────────────────────────────────── */
+        /* 1. Create / Reset */
         case 1:
             if (stack) { stack_destroy(stack); printf("  [Previous stack destroyed]\n"); }
             stack = stack_create();
             if (stack) printf("  [New empty stack created]\n");
             break;
 
-        /* ── 2. Push ───────────────────────────────────────────────── */
+        /* 2. Push */
         case 2:
             if (!stack) { printf("  [Create a stack first (option 1)]\n"); break; }
             {
@@ -94,7 +85,7 @@ static inline void run_menu(void)
             }
             break;
 
-        /* ── 3. Pop ────────────────────────────────────────────────── */
+        /* 3. Pop */
         case 3:
             if (!stack) { printf("  [No stack]\n"); break; }
             {
@@ -107,7 +98,7 @@ static inline void run_menu(void)
             }
             break;
 
-        /* ── 4. Peek ───────────────────────────────────────────────── */
+        /* 4. Peek */
         case 4:
             if (!stack) { printf("  [No stack]\n"); break; }
             {
@@ -117,13 +108,13 @@ static inline void run_menu(void)
             }
             break;
 
-        /* ── 5. Display ────────────────────────────────────────────── */
+        /* 5. Display */
         case 5:
             if (!stack) { printf("  [No stack]\n"); break; }
             stack_display(stack);
             break;
 
-        /* ── 6. Search by position ─────────────────────────────────── */
+        /* 6. Search by position */
         case 6:
             if (!stack) { printf("  [No stack]\n"); break; }
             {
@@ -134,7 +125,7 @@ static inline void run_menu(void)
             }
             break;
 
-        /* ── 7. Search by value ─────────────────────────────────────── */
+        /* 7. Search by value */
         case 7:
             if (!stack) { printf("  [No stack]\n"); break; }
             {
@@ -150,7 +141,7 @@ static inline void run_menu(void)
             }
             break;
 
-        /* ── 8. Delete at position ──────────────────────────────────── */
+        /* 8. Delete at position */
         case 8:
             if (!stack) { printf("  [No stack]\n"); break; }
             {
@@ -160,7 +151,7 @@ static inline void run_menu(void)
             }
             break;
 
-        /* ── 9. Register ────────────────────────────────────────────── */
+        /* 9. Register */
         case 9:
             if (!stack) { printf("  [No stack]\n"); break; }
             {
@@ -171,7 +162,7 @@ static inline void run_menu(void)
             }
             break;
 
-        /* ── 10. Load from binary ────────────────────────────────────── */
+        /* 10. Load from binary */
         case 10:
             if (!stack) { printf("  Create a stack first (option 1)\n"); break; }
             {
@@ -181,12 +172,12 @@ static inline void run_menu(void)
             }
             break;
 
-        /* ── 11. Lab-10 helper ──────────────────────────────────────── */
+        /* 11. Lab-10 helper */
         case 11:
             lab10_write_input();
             break;
 
-        /* ── 0. Exit ────────────────────────────────────────────────── */
+        /* 0. Exit */
         case 0:
             printf("  [Exiting – cleaning up...]\n");
             if (stack) stack_destroy(stack);
@@ -198,4 +189,4 @@ static inline void run_menu(void)
     }
 }
 
-#endif /* MENU_H */
+#endif 
