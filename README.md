@@ -383,7 +383,7 @@ This is an educational project for a university course.
 ## 👤 Author
 
 **David Nenita**  
-DSA Course – Spring 2022-23  
+DSA Course – Spring 2025-26  
 Technical University of Moldova (FCIM - FAF)
 
 ---
