@@ -33,7 +33,7 @@ static inline void print_banner(void)
 static inline void print_menu(void)
 {
     printf("\n");
-    printf("  ┌─────────────────────────────────────────────────┐\n");
+    printf("\n");
     printf("  │  1. Create / Reset stack                        │\n");
     printf("  │  2. Push record (from keyboard)                 │\n");
     printf("  │  3. Pop  record (remove top)                    │\n");
@@ -44,9 +44,9 @@ static inline void print_menu(void)
     printf("  │  8. Delete element at position                  │\n");
     printf("  │  9. Register (save) stack to file               │\n");
     printf("  │ 10. Load stack from binary file                 │\n");
-    printf("  │ 11. Write Lab-10 input.txt                      │\n");
+    printf("  │ 11. Write input.txt                             │\n");
     printf("  │  0. Exit                                        │\n");
-    printf("  └─────────────────────────────────────────────────┘\n");
+    printf("\n");
     printf("  Choice: ");
 }
 
