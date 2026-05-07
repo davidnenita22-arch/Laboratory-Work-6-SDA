@@ -173,7 +173,7 @@ static inline void run_menu(void)
         printf("  │  2. Work with Double-Ended Queue (Deque)\n");
         printf("  │  3. Work with Circular Queue\n");
         printf("  │  4. Work with Priority Queue\n");
-        printf("  │  5. Lab-6 helper (input.txt / output.txt)\n");
+        printf("  │  5. Input/Output\n");
         printf("  │  0. Exit  \n");
         printf(" \n");
         printf("  Choice: ");
