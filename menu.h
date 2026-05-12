@@ -26,7 +26,7 @@ static inline void print_banner(void)
 {
     printf("\n");
     printf(" \n");
-    printf("      Version A : Dynamic STACK (List ADS)  \n");
+    printf("      Version A : Dynamic STACK   \n");
     printf(" \n");
 }
 
@@ -179,7 +179,7 @@ static inline void run_menu(void)
 
         /* 0. Exit */
         case 0:
-            printf("  [Exiting – cleaning up...]\n");
+            printf("  [Exiting – cleaning up]\n");
             if (stack) stack_destroy(stack);
             return;
 

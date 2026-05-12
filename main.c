@@ -16,14 +16,14 @@ static int count_interrogative(const char *str)
    or 0 if it doesn't exist.  Sentences are split on '.', '!', '?' */
 static int kth_interrogative_length(const char *str, int k)
 {
-    int found  = 0;
-    int i      = 0;
-    int n      = (int)strlen(str);
-    int start  = 0;
+    int found = 0;
+    int i = 0;
+    int n = (int)strlen(str);
+    int start = 0;
 
     while (i <= n) {
         char c = str[i];
-        int  is_end = (c == '.' || c == '!' || c == '?' || c == '\0');
+        int is_end = (c == '.' || c == '!' || c == '?' || c == '\0');
         if (is_end) {
             if (c == '?') {
                 found++;
@@ -59,7 +59,7 @@ void lab10_write_input(void)
     if (len > 0 && buf[len-1] == '\n') buf[len-1] = '\0';
 
     /* Analysis */
-    int  total      = count_interrogative(buf);
+    int  total = count_interrogative(buf);
     int  second_len = kth_interrogative_length(buf, 2);
 
     /* Screen output */
@@ -68,13 +68,13 @@ void lab10_write_input(void)
     if (second_len > 0)
         printf("  Length of 2nd interrogative sent. : %d characters\n", second_len);
     else
-        printf("  2nd interrogative sentence        : not found\n");
+        printf("  2nd interrogative sentence: not found\n");
 
     /* Write output.txt */
     FILE *fout = fopen("output.txt", "w");
     if (!fout) { perror("  Cannot create output.txt"); return; }
     fprintf(fout, "Interrogative sentences count : %d\n", total);
-    fprintf(fout, "Length of 2nd interrogative   : %d\n", second_len);
+    fprintf(fout, "Length of 2nd interrogative : %d\n", second_len);
     fclose(fout);
     printf("  [output.txt written]\n");
     printf("  ────────────────────────────────────────────────────\n");

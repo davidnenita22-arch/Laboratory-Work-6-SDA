@@ -22,17 +22,17 @@ static inline void analyse_text(TextRecord *r)
 {
     if (!r) return;
 
-    int    interrog = 0;
-    int    second_len = -1;  /* -1  -> no 2nd interrogative found */
-    int    i = 0;
-    int    n = (int)strlen(r->text);
+    int interrog = 0;
+    int second_len = -1;  /* -1  -> no 2nd interrogative found */
+    int i = 0;
+    int n = (int)strlen(r->text);
 
     /* Walk through the text collecting sentence end positions */
-    int    sent_start = 0;
+    int sent_start = 0;
 
     while (i <= n) {
         char c = r->text[i];
-        int  is_end = (c == '.' || c == '!' || c == '?' || c == '\0');
+        int is_end = (c == '.' || c == '!' || c == '?' || c == '\0');
 
         if (is_end) {
             if (c == '?') {
@@ -55,7 +55,7 @@ static inline void analyse_text(TextRecord *r)
     }
 
     r->interrog_count = interrog;
-    r->second_len     = (second_len >= 0) ? second_len : 0;
+    r->second_len = (second_len >= 0) ? second_len : 0;
 }
 
 /* Read a TextRecord from keyboard + perform analysis */
@@ -99,4 +99,4 @@ static inline void print_record(const TextRecord *r)
     printf("  Source file     : %s\n", r->source_file);
 }
 
-#endif /* CDT_H */
+#endif 
