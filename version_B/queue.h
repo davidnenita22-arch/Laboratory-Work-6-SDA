@@ -5,26 +5,26 @@
 
 /* Queue type tag */
 typedef enum {
-    QUEUE_SIMPLE    = 1,
-    QUEUE_DEQUE     = 2,
-    QUEUE_CIRCULAR  = 3,
-    QUEUE_PRIORITY  = 4
+    QUEUE_SIMPLE = 1,
+    QUEUE_DEQUE = 2,
+    QUEUE_CIRCULAR = 3,
+    QUEUE_PRIORITY = 4
 } QueueType;
 
 /* Doubly-linked node  */
 typedef struct QNode {
-    TextRecord  *data;
+    TextRecord *data;
     struct QNode *prev;
     struct QNode *next;
 } QNode;
 
 /* Queue handle */
 typedef struct {
-    QNode     *front;      /* for Simple/Circular/Priority: dequeue end */
-    QNode     *rear;       /* enqueue end */
-    int        size;
-    int        capacity;   /* >0 only for QUEUE_CIRCULAR; 0 = unlimited */
-    QueueType  type;
+    QNode *front;      /* for Simple/Circular/Priority: dequeue end */
+    QNode *rear;       /* enqueue end */
+    int size;
+    int capacity;   /* >0 only for QUEUE_CIRCULAR; 0 = unlimited */
+    QueueType type;
 } Queue;
 
 static inline QNode *_qnode_new(const TextRecord *rec)
@@ -52,7 +52,7 @@ static inline void _link_rear(Queue *q, QNode *n)
     n->prev = q->rear;
     n->next = NULL;
     if (q->rear) q->rear->next = n;
-    else         q->front = n;
+    else q->front = n;
     q->rear = n;
     q->size++;
 }
@@ -63,7 +63,7 @@ static inline void _link_front(Queue *q, QNode *n)
     n->next = q->front;
     n->prev = NULL;
     if (q->front) q->front->prev = n;
-    else          q->rear = n;
+    else q->rear = n;
     q->front = n;
     q->size++;
 }
@@ -72,10 +72,10 @@ static inline void _link_front(Queue *q, QNode *n)
 static inline QNode *_unlink_front(Queue *q)
 {
     if (!q->front) return NULL;
-    QNode *n   = q->front;
-    q->front   = n->next;
+    QNode *n = q->front;
+    q->front = n->next;
     if (q->front) q->front->prev = NULL;
-    else          q->rear = NULL;
+    else q->rear = NULL;
     n->next = n->prev = NULL;
     q->size--;
     return n;
@@ -88,7 +88,7 @@ static inline QNode *_unlink_rear(Queue *q)
     QNode *n = q->rear;
     q->rear  = n->prev;
     if (q->rear) q->rear->next = NULL;
-    else         q->front = NULL;
+    else q->front = NULL;
     n->next = n->prev = NULL;
     q->size--;
     return n;
@@ -243,11 +243,11 @@ static inline int queue_delete_at(Queue *q, int pos)
 static inline const char *queue_type_name(QueueType t)
 {
     switch (t) {
-    case QUEUE_SIMPLE:   return "Simple Queue";
-    case QUEUE_DEQUE:    return "Double-Ended Queue";
+    case QUEUE_SIMPLE: return "Simple Queue";
+    case QUEUE_DEQUE: return "Double-Ended Queue";
     case QUEUE_CIRCULAR: return "Circular Queue";
     case QUEUE_PRIORITY: return "Priority Queue";
-    default:             return "Unknown";
+    default: return "Unknown";
     }
 }
 
@@ -284,8 +284,8 @@ static inline int queue_register(const Queue *q, const char *path, int binary)
         FILE *fp = fopen(path, "wb");
         if (!fp) { perror("queue_register (binary)"); return 0; }
         int t = (int)q->type;
-        fwrite(&t,        sizeof(int), 1, fp);
-        fwrite(&q->size,  sizeof(int), 1, fp);
+        fwrite(&t, sizeof(int), 1, fp);
+        fwrite(&q->size, sizeof(int), 1, fp);
         fwrite(&q->capacity, sizeof(int), 1, fp);
         QNode *cur = q->front;
         while (cur) {

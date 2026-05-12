@@ -9,7 +9,6 @@
 #define MAX_TEXT   2048
 #define MAX_PATH   512
 
-/* Primary CDT */
 typedef struct {
     char   text[MAX_TEXT];   /* raw text string entered by the user  */
     int    interrog_count;   /* number of interrogative sentences (end '?')  */
@@ -21,7 +20,6 @@ typedef struct {
 static inline void analyse_text(TextRecord *r)
 {
     if (!r) return;
-
     int interrog = 0;
     int second_len = -1;          /* -1  -> no 2nd interrogative found  */
     int i = 0;

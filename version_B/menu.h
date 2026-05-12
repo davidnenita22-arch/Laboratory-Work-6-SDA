@@ -47,12 +47,12 @@ static inline void run_queue_menu(Queue *q)
                queue_type_name(q->type), q->size);
         printf("   1. Enqueue (at rear)\n");
         if (q->type == QUEUE_DEQUE)
-            printf("   2. Enqueue at FRONT  [Deque only]\n");
+            printf("   2. Enqueue at FRONT  (Deque only)\n");
         else
             printf("   2. (Deque only)\n");
         printf("   3. Dequeue (from front)\n");
         if (q->type == QUEUE_DEQUE)
-            printf("   4. Dequeue from REAR [Deque only]\n");
+            printf("   4. Dequeue from REAR (Deque only)\n");
         else
             printf("   4. (Deque only)\n");
         printf("   5. Peek front\n");
