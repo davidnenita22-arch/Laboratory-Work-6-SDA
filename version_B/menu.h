@@ -102,13 +102,13 @@ static inline void run_queue_menu(Queue *q)
         case 5: {   /* peek front */
             TextRecord *r = queue_peek_front(q);
             if (r) { printf("  [Front:]\n"); print_record(r); }
-            else    printf("  [Empty]\n");
+            else printf("  [Empty]\n");
             break;
         }
         case 6: {   /* peek rear */
             TextRecord *r = queue_peek_rear(q);
             if (r) { printf("  [Rear:]\n"); print_record(r); }
-            else    printf("  [Empty]\n");
+            else printf("  [Empty]\n");
             break;
         }
         case 7:     /* display */
@@ -118,7 +118,7 @@ static inline void run_queue_menu(Queue *q)
             int pos = read_int("  Position (1=front): ");
             TextRecord *r = queue_search_by_pos(q, pos);
             if (r) { printf("  [Found:]\n"); print_record(r); }
-            else    printf("  [Not found]\n");
+            else printf("  [Not found]\n");
             break;
         }
         case 9: {   /* search by value */
@@ -129,7 +129,7 @@ static inline void run_queue_menu(Queue *q)
                 if (l > 0 && txt[l-1] == '\n') txt[l-1] = '\0';
                 TextRecord *r = queue_search_by_value(q, txt);
                 if (r) { printf("  [Found:]\n"); print_record(r); }
-                else    printf("  [Not found]\n");
+                else printf("  [Not found]\n");
             }
             break;
         }

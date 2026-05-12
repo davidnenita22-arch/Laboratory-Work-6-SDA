@@ -10,10 +10,10 @@
 #define MAX_PATH   512
 
 typedef struct {
-    char   text[MAX_TEXT];   /* raw text string entered by the user  */
-    int    interrog_count;   /* number of interrogative sentences (end '?')  */
-    int    second_len;       /* length of the 2nd interrogative sentence */
-    char   source_file[MAX_PATH]; /* path of the file the record came from */
+    char text[MAX_TEXT];   /* raw text string entered by the user  */
+    int interrog_count;   /* number of interrogative sentences (end '?')  */
+    int second_len;       /* length of the 2nd interrogative sentence */
+    char source_file[MAX_PATH]; /* path of the file the record came from */
 } TextRecord;
 
 /* Utility: count interrogative sentences & find 2nd one's length */
@@ -53,7 +53,7 @@ static inline void analyse_text(TextRecord *r)
     }
 
     r->interrog_count = interrog;
-    r->second_len     = (second_len >= 0) ? second_len : 0;
+    r->second_len = (second_len >= 0) ? second_len : 0;
 }
 
 /* Read a TextRecord from keyboard + perform analysis */
@@ -80,10 +80,10 @@ static inline int read_record_keyboard(TextRecord *r, const char *src_hint)
 static inline void write_record_file(FILE *fp, const TextRecord *r)
 {
     if (!fp || !r) return;
-    fprintf(fp, "TEXT    : %s\n", r->text);
+    fprintf(fp, "TEXT : %s\n", r->text);
     fprintf(fp, "INTERROG: %d\n", r->interrog_count);
     fprintf(fp, "2ND_LEN : %d\n", r->second_len);
-    fprintf(fp, "SOURCE  : %s\n", r->source_file);
+    fprintf(fp, "SOURCE : %s\n", r->source_file);
     fprintf(fp, "---\n");
 }
 
@@ -91,10 +91,10 @@ static inline void write_record_file(FILE *fp, const TextRecord *r)
 static inline void print_record(const TextRecord *r)
 {
     if (!r) return;
-    printf("  Text            : %s\n", r->text);
+    printf("  Text : %s\n", r->text);
     printf("  Interrogatives  : %d\n", r->interrog_count);
     printf("  2nd sent. length: %d\n", r->second_len);
-    printf("  Source file     : %s\n", r->source_file);
+    printf("  Source file : %s\n", r->source_file);
 }
 
 #endif
