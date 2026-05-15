@@ -5,7 +5,7 @@
 #include "file_utils.h"
 
 /* forward declaration of the input.txt writer (defined in main.c) */
-void lab10_write_input(void);
+void lab6_write_input(void);
 
 static inline void clear_input_buffer(void)
 {
@@ -172,9 +172,9 @@ static inline void run_menu(void)
             }
             break;
 
-        /* 11. Lab-10 helper */
+        /* 11. Lab-6 helper */
         case 11:
-            lab10_write_input();
+            lab6_write_input();
             break;
 
         /* 0. Exit */

@@ -11,10 +11,10 @@
 
 /* Primary CDT */
 typedef struct {
-    char   text[MAX_TEXT];   /* raw text string entered by the user */
-    int    interrog_count;   /* number of interrogative sentences (end '?') */
-    int    second_len;       /* length of the 2nd interrogative sentence */
-    char   source_file[MAX_PATH]; /* path of the file the record came from */
+    char text[MAX_TEXT];   /* raw text string entered by the user */
+    int interrog_count;   /* number of interrogative sentences (end '?') */
+    int second_len;       /* length of the 2nd interrogative sentence */
+    char source_file[MAX_PATH]; /* path of the file the record came from */
 } TextRecord;
 
 /*  Utility: count interrogative sentences & find 2nd one's length */

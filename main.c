@@ -39,8 +39,8 @@ static int kth_interrogative_length(const char *str, int k)
     return 0;
 }
 
-/* Lab-10 entry: write input.txt and produce output.txt */
-void lab10_write_input(void)
+/* write input.txt and produce output.txt */
+void lab6_write_input(void)
 {
     printf("  Creating input.txt in current directory...\n");
 

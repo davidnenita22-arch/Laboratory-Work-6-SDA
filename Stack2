@@ -1,0 +1,20 @@
+=== STACK REGISTER  (size=3) ===
+
+[1]
+TEXT    : This is one sentence! Is this a question?
+INTERROG: 1
+2ND_LEN : 0
+SOURCE  : keyboard
+---
+[2]
+TEXT    : No questions here. Just statements.
+INTERROG: 0
+2ND_LEN : 0
+SOURCE  : keyboard
+---
+[3]
+TEXT    : How are you? I am fine. Are you coming?
+INTERROG: 2
+2ND_LEN : 15
+SOURCE  : keyboard
+---
